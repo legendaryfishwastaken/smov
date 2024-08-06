@@ -61,7 +61,7 @@ export function EpisodeSelector({
 
   return (
     <div className="flex flex-row relative">
-      <div className="w-24 min-w-20 cursor-pointer overflow-y-auto overflow-x-hidden max-h-56 z-10 scrollbar-hide">
+      <div className="w-24 min-w-20 cursor-pointer overflow-y-auto overflow-x-hidden max-h-40 z-10 scrollbar-hide">
         {seasonsData.map((season) => (
           <div
             key={season.season_number}
@@ -80,7 +80,7 @@ export function EpisodeSelector({
         ))}
       </div>
       <div className="flex-auto sm:mt-0 sm:ml-4 cursor-pointer overflow-x-auto overflow-y-hidden sm:overflow-y-auto sm:overflow-x-hidden max-h-56 max-w-[70vw]">
-        <div className="flex sm:grid sm:grid-cols-6 sm:gap-2 gap-1">
+        <div className="flex sm:grid sm:grid-cols-4 sm:gap-2 gap-1">
           {selectedSeason ? (
             selectedSeason.episodes.map(
               (episode: {
