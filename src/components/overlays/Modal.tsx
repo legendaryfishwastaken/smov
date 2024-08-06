@@ -18,7 +18,7 @@ export function useModal(id: string) {
 
 export function ModalCard(props: { children?: ReactNode }) {
   return (
-    <div className="w-full max-w-[30rem] m-4">
+    <div className="w-full max-w-[60rem] m-4">
       <div className="w-full bg-modal-background rounded-xl p-8 pointer-events-auto">
         {props.children}
       </div>
