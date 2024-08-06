@@ -174,7 +174,7 @@ export function PopupModal({
     >
       <div
         ref={modalRef}
-        className="rounded-xl mx-4 min-w-[23em] overflow-x-hidden bg-modal-background flex flex-col justify-center items-center transition-opacity duration-100 sm:max-w-xl sm:w-auto sm:h-auto overflow-y-auto p-4"
+        className="rounded-xl mx-4 min-w-[46em] overflow-x-hidden bg-modal-background flex flex-col justify-center items-center transition-opacity duration-100 sm:max-w-xl sm:w-auto sm:h-auto overflow-y-auto p-4"
         style={{ opacity: style.opacity, height: "auto" }}
       >
         <div className="aspect-w-16 aspect-h-9 w-full sm:w-auto rounded-xl">
