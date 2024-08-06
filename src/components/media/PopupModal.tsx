@@ -174,8 +174,8 @@ export function PopupModal({
     >
       <div
         ref={modalRef}
-        className="rounded-xl mx-4 min-w-[73em] overflow-x-hidden bg-modal-background flex flex-col justify-center items-center transition-opacity duration-100 sm:max-w-xl sm:w-auto sm:h-auto overflow-y-70 p-4"
-        style={{ opacity: style.opacity, height: "auto" }}
+        className="rounded-xl mx-4 min-w-[73em] overflow-x-hidden bg-modal-background flex flex-col justify-center items-center transition-opacity duration-100 sm:max-w-xl sm:w-auto sm:h-auto overflow-y-auto p-4"
+        style={{ opacity: style.opacity, height: "80%" }}
       >
         <div className="aspect-w-16 aspect-h-9 w-full sm:w-auto rounded-xl">
           {data?.backdrop_path ? (
