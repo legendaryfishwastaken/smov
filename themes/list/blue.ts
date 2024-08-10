@@ -53,7 +53,7 @@ const tokens = {
 };
 
 export default createTheme({
-  name: "blue",
+  name: "vidbinge",
   extend: {
     colors: {
       themePreview: {
