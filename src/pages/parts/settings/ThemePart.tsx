@@ -11,9 +11,9 @@ const availableThemes = [
     key: "settings.appearance.themes.default",
   },
   {
-    id: "blue",
-    selector: "theme-blue",
-    key: "settings.appearance.themes.blue",
+    id: "vidbinge",
+    selector: "theme-vidbinge",
+    key: "settings.appearance.themes.vidbinge",
   },
   {
     id: "teal",
