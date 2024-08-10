@@ -19,7 +19,7 @@
       "title": "What about my data and stuff?"
     },
     "q5": {
-      "body": "Well Video Thing has a twitter account that can be found in the footer of this page as well as a link to the source code on Github.",
+      "body": "You just can't.",
       "title": "How can I find out more?"
     },
     "title": "About Video Thing (^▽^)"
@@ -163,6 +163,7 @@
         "extra": ["Have you seen Blazing Saddles?"],
         "extra": ["Welcome to Video Thing!"],
         "extra": [" /ᐠ>ヮ<ᐟ\\ฅ"],
+        "extra": ["Viva la movie-web!"],
         "extra": ["Viva la Video Thing!"]
       },
       "morning": {
@@ -170,6 +171,7 @@
         "extra": ["Can't go wrong with Friends"],
         "extra": ["I hear The Expanse is popular"],
         "extra": ["\"૮₍  ˶•⤙•˶ ₎ა"],
+        "extra": ["Viva la movie-web!"],
         "extra": ["Viva la Video Thing!"]
       },
       "night": {
@@ -177,6 +179,7 @@
         "extra": ["Rick & Morty is great with friends!"],
         "extra": ["Go smoke and watch The Simpsons!"],
         "extra": ["(づ ᴗ _ᴗ)づ♡"],
+        "extra": ["Viva la movie-web!"],
         "extra": ["Viva la Video Thing!"]
       },
       "420": {
