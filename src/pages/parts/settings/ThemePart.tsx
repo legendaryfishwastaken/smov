@@ -35,6 +35,11 @@ const availableThemes = [
     selector: "theme-blck",
     key: "settings.appearance.themes.blck",
   },
+    {
+    id: "cool",
+    selector: "theme-cool",
+    key: "Cool",
+  },
 ];
 
 function ThemePreview(props: {
