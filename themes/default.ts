@@ -33,7 +33,7 @@ const tokens = {
       c400: "#701B2B",
     },
   },
-  blue: {
+  vidbinge: {
     c50: "#ADADF5",
     c100: "#7979CC",
     c200: "#5D5DAE",
@@ -88,7 +88,7 @@ export const defaultTheme = {
   extend: {
     colors: {
       themePreview: {
-        primary: tokens.blue.c200,
+        primary: tokens.vidbinge.c200,
         secondary: tokens.shade.c50,
         ghost: tokens.white,
       },
@@ -97,20 +97,20 @@ export const defaultTheme = {
       pill: {
         background: tokens.shade.c300,
         backgroundHover: tokens.shade.c200,
-        highlight: tokens.blue.c200,
+        highlight: tokens.vidbinge.c200,
 
         activeBackground: tokens.shade.c300,
       },
 
       // meta data for the theme itself
       global: {
-        accentA: tokens.blue.c200,
-        accentB: tokens.blue.c300,
+        accentA: tokens.vidbinge.c200,
+        accentB: tokens.vidbinge.c300,
       },
 
       // light bar
       lightBar: {
-        light: tokens.blue.c400,
+        light: tokens.vidbinge.c400,
       },
 
       // Buttons
@@ -138,7 +138,7 @@ export const defaultTheme = {
         secondary: tokens.shade.c600,
         secondaryHover: tokens.shade.c400,
         accentA: tokens.purple.c500,
-        accentB: tokens.blue.c500,
+        accentB: tokens.vidbinge.c500,
       },
 
       // Modals
