@@ -37,7 +37,7 @@ const availableThemes = [
   },
     {
     id: "cool",
-    selector: "theme-cool",
+    selector: "theme-blck",
     key: "Cool",
   },
 ];
