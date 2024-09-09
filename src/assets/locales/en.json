@@ -1,6 +1,6 @@
 {
   "about": {
-    "description": "Video Thing is a fork of movie-web that is ensured to stay up even after the shutdown of movie-web.app. modal.lfdev.site runs on a private, self-hosted VPS. I run this site at a loss; there are no ads due to my beliefs in free media.",
+    "description": "Video Thing is a fork of movie-web that is ensured to stay up even after the shutdown of movie-web.app and sudo-flix.lol. There are no ads on the site. If there are, you're either on the wrong site, or I've made a mistake (in which case you should let me know immediately).",
     "faqTitle": "Common questions",
     "q1": {
       "body": "Video Thing does not host any content. When you click on something to watch, the internet is searched for the selected media (On the loading screen and in the 'video sources' tab you can see which source you're using). Media never gets uploaded by Video Thing, everything is through this searching mechanism.",
@@ -15,7 +15,7 @@
       "title": "The search results display the show or movie, why can't I play it?"
     },
     "q4": {
-      "body": "All data is synced to the sudo-backend which is different than the community backend and is independently hosted by me, anyone is free to use this as well.",
+      "body": "All data is synced to the sudo-backend.",
       "title": "What about my data and stuff?"
     },
     "q5": {
@@ -73,7 +73,7 @@
     "verify": {
       "description": "Please enter your passphrase from earlier to confirm you have saved it and to create your account",
       "invalidData": "Data is not valid",
-      "noMatch": "Passphrase doesn't match 😭",
+      "noMatch": "Bro forgot already 😭",
       "passphraseLabel": "Your 12-word passphrase",
       "recaptchaFailed": "ReCaptcha validation failed",
       "register": "Create account",
@@ -91,12 +91,6 @@
     "legal": {
       "disclaimer": "Disclaimer ◝(ᵔᵕᵔ)◜",
       "disclaimerText": "Please note: Video Thing does not host any files itself but instead only display's content from 3rd party providers. Legal issues should be taken up with them."
-    },
-    "links": {
-      "discord": "Discord",
-      "dmca": "DMCA",
-      "github": "GitHub",
-      "twitter": "Twitter"
     },
     "tagline": "Watch your favorite shows and movies for free with no ads ever! (っ'ヮ'c)"
   },
@@ -160,9 +154,9 @@
     "titles": {
       "day": {
         "default": "What would you like to watch this afternoon?",
-        "extra": ["Have you seen Blazing Saddles?"],
+        "extra": ["Your FBI agent is watching you."],
         "extra": ["Welcome to Video Thing!"],
-        "extra": [" /ᐠ>ヮ<ᐟ\\ฅ"],
+        "extra": ["Viva la sudo-flix"],
         "extra": ["Viva la movie-web!"],
         "extra": ["Viva la Video Thing!"]
       },
@@ -170,15 +164,15 @@
         "default": "What would you like to watch this morning?",
         "extra": ["Can't go wrong with Friends"],
         "extra": ["I hear The Expanse is popular"],
-        "extra": ["\"૮₍  ˶•⤙•˶ ₎ა"],
+        "extra": ["Go outside.."],
         "extra": ["Viva la movie-web!"],
         "extra": ["Viva la Video Thing!"]
       },
       "night": {
         "default": "What would you like to watch tonight?",
-        "extra": ["Rick & Morty is great with friends!"],
-        "extra": ["Go smoke and watch The Simpsons!"],
-        "extra": ["(づ ᴗ _ᴗ)づ♡"],
+        "extra": ["Movie night is fun."],
+        "extra": ["Go sleep. It's nighttime."],
+        "extra": ["This is illegal :O"],
         "extra": ["Viva la movie-web!"],
         "extra": ["Viva la Video Thing!"]
       },
@@ -223,7 +217,7 @@
   "downtimeNotice": {
     "badge": "Issues",
     "goHome": "Go home",
-    "message": "modal.lfdev.site is experiencing issues with some providers again, if you cant find or play a show please change the source. Expect this error to persist throughout the below times.",
+    "message": "movies.lfdev.site is experiencing issues with some providers again, if you cant find or play a show please change the source. Expect this error to persist throughout the below times.",
     "timeFrame": "<bold>March 31th 11:00 PM - 5:00 AM EST</bold>",
     "title": "Provider issues"
   },
@@ -272,7 +266,7 @@
       "explainer": "To get the best streams possible, you will need to choose which streaming method you want to use.",
       "options": {
         "default": {
-          "text": "I don't want good quality streams,<0 /> <1>use the default setup ▄︻デ══━一 ʕ•͡-•ʔ</1>"
+          "text": "I don't want good quality streams,<0 /> <1>use the default setup</1>"
         },
         "extension": {
           "action": "Install extension",
