@@ -311,7 +311,7 @@ export function SettingsPage() {
         <div className="mt-10">
           <AdminPanelPart />
         </div>
-        <div id="settings-preferences" className="mt-48">
+        <div id="settings-preferences" className="mt-28">
           <PreferencesPart
             language={state.appLanguage.state}
             setLanguage={state.appLanguage.set}
@@ -325,20 +325,20 @@ export function SettingsPage() {
             setEnableSourceOrder={state.enableSourceOrder.set}
           />
         </div>
-        <div id="settings-appearance" className="mt-48">
+        <div id="settings-appearance" className="mt-28">
           <ThemePart
             active={previewTheme ?? "default"}
             inUse={activeTheme ?? "default"}
             setTheme={setThemeWithPreview}
           />
         </div>
-        <div id="settings-captions" className="mt-48">
+        <div id="settings-captions" className="mt-28">
           <CaptionsPart
             styling={state.subtitleStyling.state}
             setStyling={state.subtitleStyling.set}
           />
         </div>
-        <div id="settings-connection" className="mt-48">
+        <div id="settings-connection" className="mt-28">
           <ConnectionsPart
             backendUrl={state.backendUrl.state}
             setBackendUrl={state.backendUrl.set}
