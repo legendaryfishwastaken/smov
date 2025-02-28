@@ -148,6 +148,9 @@ export function SettingsPage() {
     (s) => s.setEnableSourceOrder,
   );
 
+  const proxyTmdb = usePreferencesStore((s) => s.proxyTmdb);
+  const setProxyTmdb = usePreferencesStore((s) => s.setProxyTmdb);
+
   const account = useAuthStore((s) => s.account);
   const updateProfile = useAuthStore((s) => s.setAccountProfile);
   const updateDeviceName = useAuthStore((s) => s.updateDeviceName);
@@ -174,6 +177,7 @@ export function SettingsPage() {
     enableAutoplay,
     sourceOrder,
     enableSourceOrder,
+    proxyTmdb,
   );
 
   const availableSources = useMemo(() => {
@@ -251,6 +255,7 @@ export function SettingsPage() {
     setProxySet(state.proxyUrls.state?.filter((v) => v !== "") ?? null);
     setEnableSourceOrder(state.enableSourceOrder.state);
     setFebboxToken(state.febboxToken.state);
+    setProxyTmdb(state.proxyTmdb.state);
 
     if (state.profile.state) {
       updateProfile(state.profile.state);
@@ -284,6 +289,7 @@ export function SettingsPage() {
     logout,
     setBackendUrl,
     setEnableSourceOrder,
+    setProxyTmdb,
   ]);
   return (
     <SubPageLayout>
@@ -353,6 +359,8 @@ export function SettingsPage() {
             setProxyUrls={state.proxyUrls.set}
             febboxToken={state.febboxToken.state}
             setFebboxToken={state.febboxToken.set}
+            proxyTmdb={state.proxyTmdb.state}
+            setProxyTmdb={state.proxyTmdb.set}
           />
         </div>
       </SettingsLayout>

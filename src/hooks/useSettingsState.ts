@@ -55,6 +55,7 @@ export function useSettingsState(
   enableAutoplay: boolean,
   sourceOrder: string[],
   enableSourceOrder: boolean,
+  proxyTmdb: boolean,
 ) {
   const [proxyUrlsState, setProxyUrls, resetProxyUrls, proxyUrlsChanged] =
     useDerived(proxyUrls);
@@ -112,6 +113,8 @@ export function useSettingsState(
     resetEnableSourceOrder,
     enableSourceOrderChanged,
   ] = useDerived(enableSourceOrder);
+  const [proxyTmdbState, setProxyTmdbState, resetProxyTmdb, proxyTmdbChanged] =
+    useDerived(proxyTmdb);
 
   function reset() {
     resetTheme();
@@ -127,6 +130,7 @@ export function useSettingsState(
     resetEnableAutoplay();
     resetSourceOrder();
     resetEnableSourceOrder();
+    resetProxyTmdb();
   }
 
   const changed =
@@ -141,7 +145,8 @@ export function useSettingsState(
     enableThumbnailsChanged ||
     enableAutoplayChanged ||
     sourceOrderChanged ||
-    enableSourceOrderChanged;
+    enableSourceOrderChanged ||
+    proxyTmdbChanged;
 
   return {
     reset,
@@ -205,6 +210,11 @@ export function useSettingsState(
       state: enableSourceOrderState,
       set: setEnableSourceOrderState,
       changed: enableSourceOrderChanged,
+    },
+    proxyTmdb: {
+      state: proxyTmdbState,
+      set: setProxyTmdbState,
+      changed: proxyTmdbChanged,
     },
   };
 }
