@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import { sendPage } from "@/backend/extension/messaging";
 import { Button } from "@/components/buttons/Button";
@@ -30,7 +30,6 @@ export function ScrapeErrorPart(props: ScrapeErrorPartProps) {
   const location = useLocation();
   const [extensionState, setExtensionState] =
     useState<ExtensionStatus>("unknown");
-  const navigate = useNavigate();
 
   const error = useMemo(() => {
     const data = props.data;
@@ -109,22 +108,32 @@ export function ScrapeErrorPart(props: ScrapeErrorPartProps) {
         <Title>{t("player.scraping.notFound.title")}</Title>
         <Paragraph>{t("player.scraping.notFound.text")}</Paragraph>
         <div className="flex gap-3">
-          <Button
-            href="/"
-            theme="secondary"
-            padding="md:px-12 p-2.5"
-            className="mt-6"
-          >
-            {t("player.scraping.notFound.homeButton")}
-          </Button>
-          <Button
-            onClick={() => navigate("/discover")}
-            theme="secondary"
-            padding="md:px-12 p-2.5"
-            className="mt-6"
-          >
-            {t("player.scraping.notFound.discoverButton")}
-          </Button>
+          {(() => {
+            const backlink = new URLSearchParams(window.location.search).get(
+              "backlink",
+            );
+
+            // Only show backlink if it comes from URL parameter, and strip any quotes
+            if (backlink) {
+              // Remove any surrounding quotes from the URL
+              const cleanUrl = backlink.replace(/^["'](.*)["']$/, "$1");
+
+              return (
+                <Button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.parent.location.href = cleanUrl;
+                  }}
+                  theme="secondary"
+                  padding="md:px-12 p-2.5"
+                  className="mt-6"
+                >
+                  {t("player.scraping.notFound.homeButton")}
+                </Button>
+              );
+            }
+            return null;
+          })()}
         </div>
         <Button
           onClick={() => modal.show()}

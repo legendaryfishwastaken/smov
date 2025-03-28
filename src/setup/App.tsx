@@ -1,39 +1,24 @@
 import { ReactElement, Suspense, lazy, useEffect, useState } from "react";
 import { lazyWithPreload } from "react-lazy-with-preload";
-import {
-  Navigate,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 
-import { convertLegacyUrl, isLegacyUrl } from "@/backend/metadata/getmeta";
-import { generateQuickSearchMediaUrl } from "@/backend/metadata/tmdb";
+import {
+  convertEmbedUrl,
+  convertLegacyUrl,
+  isEmbedUrl,
+  isLegacyUrl,
+} from "@/backend/metadata/getmeta";
 import { useOnlineListener } from "@/hooks/usePing";
-import { AboutPage } from "@/pages/About";
 import { AdminPage } from "@/pages/admin/AdminPage";
 import VideoTesterView from "@/pages/developer/VideoTesterView";
 import { Discover } from "@/pages/discover/Discover";
-import { DmcaPage } from "@/pages/Dmca";
 import MaintenancePage from "@/pages/errors/MaintenancePage";
 import { NotFoundPage } from "@/pages/errors/NotFoundPage";
-import { HomePage } from "@/pages/HomePage";
 import { JipPage } from "@/pages/Jip";
-import { LoginPage } from "@/pages/Login";
-import { MigrationPage } from "@/pages/migration/Migration";
-import { MigrationDirectPage } from "@/pages/migration/MigrationDirect";
-import { MigrationDownloadPage } from "@/pages/migration/MigrationDownload";
-import { MigrationUploadPage } from "@/pages/migration/MigrationUpload";
-import { OnboardingPage } from "@/pages/onboarding/Onboarding";
-import { OnboardingExtensionPage } from "@/pages/onboarding/OnboardingExtension";
-import { OnboardingProxyPage } from "@/pages/onboarding/OnboardingProxy";
-import { RegisterPage } from "@/pages/Register";
-import { SupportPage } from "@/pages/Support";
 import { Layout } from "@/setup/Layout";
 import { useHistoryListener } from "@/stores/history";
-import { LanguageProvider } from "@/stores/language";
+import { LanguageProvider, useLanguageStore } from "@/stores/language";
+import { ThemeProvider, useThemeStore } from "@/stores/theme";
 
 const DeveloperPage = lazy(() => import("@/pages/DeveloperPage"));
 const TestView = lazy(() => import("@/pages/developer/TestView"));
@@ -46,49 +31,32 @@ SettingsPage.preload();
 function LegacyUrlView({ children }: { children: ReactElement }) {
   const location = useLocation();
   const navigate = useNavigate();
+  const setTheme = useThemeStore((s) => s.setTheme);
+  const setLanguage = useLanguageStore((s) => s.setLanguage);
 
   useEffect(() => {
     const url = location.pathname;
     if (!isLegacyUrl(url)) return;
-    convertLegacyUrl(location.pathname).then((convertedUrl) => {
+    convertLegacyUrl(url).then((convertedUrl) => {
       navigate(convertedUrl ?? "/", { replace: true });
     });
   }, [location.pathname, navigate]);
 
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const theme = searchParams.get("theme");
+    const language = searchParams.get("language");
+
+    if (theme) {
+      setTheme(theme);
+    }
+    if (language) {
+      setLanguage(language);
+    }
+  }, [location.search, setTheme, setLanguage]);
+
   if (isLegacyUrl(location.pathname)) return null;
   return children;
-}
-
-function QuickSearch() {
-  const { query } = useParams<{ query: string }>();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (query) {
-      generateQuickSearchMediaUrl(query).then((url) => {
-        navigate(url ?? "/", { replace: true });
-      });
-    } else {
-      navigate("/", { replace: true });
-    }
-  }, [query, navigate]);
-
-  return null;
-}
-
-function QueryView() {
-  const { query } = useParams<{ query: string }>();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (query) {
-      navigate(`/browse/${query}`, { replace: true });
-    } else {
-      navigate("/", { replace: true });
-    }
-  }, [query, navigate]);
-
-  return null;
 }
 
 export const maintenanceTime = "March 31th 11:00 PM - 5:00 AM EST";
@@ -111,87 +79,103 @@ function App() {
     }
   }, [setShowDowntime, maintenance]);
 
+  function EmbedRedirectView({ children }: { children: ReactElement }) {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const setTheme = useThemeStore((s) => s.setTheme);
+    const setLanguage = useLanguageStore((s) => s.setLanguage);
+
+    useEffect(() => {
+      const url = location.pathname;
+      if (!isEmbedUrl(url)) return;
+      convertEmbedUrl(url).then((convertedUrl) => {
+        navigate(convertedUrl ?? "/", { replace: true });
+      });
+    }, [location.pathname, navigate]);
+
+    useEffect(() => {
+      const searchParams = new URLSearchParams(location.search);
+      const theme = searchParams.get("theme");
+      const language = searchParams.get("language");
+
+      if (theme) {
+        setTheme(theme);
+      }
+      if (language) {
+        setLanguage(language);
+      }
+    }, [location.search, setTheme, setLanguage]);
+
+    if (isEmbedUrl(location.pathname)) return null;
+    return children;
+  }
+
   return (
     <Layout>
       <LanguageProvider />
-      {!showDowntime && (
-        <Routes>
-          {/* functional routes */}
-          <Route path="/s/:query" element={<QuickSearch />} />
-          <Route path="/search/:type" element={<Navigate to="/browse" />} />
-          <Route path="/search/:type/:query?" element={<QueryView />} />
-          {/* pages */}
-          <Route
-            path="/media/:media"
-            element={
-              <LegacyUrlView>
-                <Suspense fallback={null}>
-                  <PlayerView />
-                </Suspense>
-              </LegacyUrlView>
-            }
-          />
-          <Route
-            path="/media/:media/:season/:episode"
-            element={
-              <LegacyUrlView>
-                <Suspense fallback={null}>
-                  <PlayerView />
-                </Suspense>
-              </LegacyUrlView>
-            }
-          />
-          <Route path="/browse/:query?" element={<HomePage />} />
-          <Route path="/" element={<HomePage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/onboarding" element={<OnboardingPage />} />
-          <Route
-            path="/onboarding/extension"
-            element={<OnboardingExtensionPage />}
-          />
-          <Route path="/onboarding/proxy" element={<OnboardingProxyPage />} />
-
-          {/* Migration pages - awaiting import and export fixes */}
-          <Route path="/migration" element={<MigrationPage />} />
-          <Route path="/migration/direct" element={<MigrationDirectPage />} />
-          <Route
-            path="/migration/download"
-            element={<MigrationDownloadPage />}
-          />
-          <Route path="/migration/upload" element={<MigrationUploadPage />} />
-
-          <Route path="/dmca" element={<DmcaPage />} />
-          {/* Support page */}
-          <Route path="/support" element={<SupportPage />} />
-          <Route path="/jip" element={<JipPage />} />
-          {/* Discover page */}
-          <Route path="/discover" element={<Discover />} />
-          {/* Settings page */}
-          <Route
-            path="/settings"
-            element={
-              <Suspense fallback={null}>
-                <SettingsPage />
-              </Suspense>
-            }
-          />
-          {/* admin routes */}
-          <Route path="/admin" element={<AdminPage />} />
-          {/* other */}
-          <Route path="/dev" element={<DeveloperPage />} />
-          <Route path="/dev/video" element={<VideoTesterView />} />
-          {/* developer routes that can abuse workers are disabled in production */}
-          {process.env.NODE_ENV === "development" ? (
-            <Route path="/dev/test" element={<TestView />} />
-          ) : null}
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      )}
-      {showDowntime && (
-        <MaintenancePage onHomeButtonClick={handleButtonClick} />
-      )}
+      <ThemeProvider applyGlobal>
+        {!showDowntime && (
+          <Routes>
+            {/* pages */}
+            <Route
+              path="/embed/:media"
+              element={
+                <EmbedRedirectView>
+                  <Suspense fallback={null}>
+                    <PlayerView />
+                  </Suspense>
+                </EmbedRedirectView>
+              }
+            />
+            <Route
+              path="/embed/:media/:seasonNumber/:episodeNumber"
+              element={
+                <EmbedRedirectView>
+                  <Suspense fallback={null}>
+                    <PlayerView />
+                  </Suspense>
+                </EmbedRedirectView>
+              }
+            />
+            <Route
+              path="/media/:media"
+              element={
+                <LegacyUrlView>
+                  <Suspense fallback={null}>
+                    <PlayerView />
+                  </Suspense>
+                </LegacyUrlView>
+              }
+            />
+            <Route
+              path="/media/:media/:season/:episode"
+              element={
+                <LegacyUrlView>
+                  <Suspense fallback={null}>
+                    <PlayerView />
+                  </Suspense>
+                </LegacyUrlView>
+              }
+            />
+            <Route path="/jip" element={<JipPage />} />
+            {/* Discover page */}
+            <Route path="/discover" element={<Discover />} />
+            {/* admin routes */}
+            <Route path="/admin" element={<AdminPage />} />
+            {/* other */}
+            <Route path="/dev" element={<DeveloperPage />} />
+            <Route path="/dev/video" element={<VideoTesterView />} />
+            {/* developer routes that can abuse workers are disabled in production */}
+            {process.env.NODE_ENV === "development" ? (
+              <Route path="/dev/test" element={<TestView />} />
+            ) : null}
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        )}
+        {showDowntime && (
+          <MaintenancePage onHomeButtonClick={handleButtonClick} />
+        )}
+      </ThemeProvider>
     </Layout>
   );
 }

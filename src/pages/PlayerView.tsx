@@ -111,7 +111,7 @@ export function RealPlayerView() {
   );
 
   return (
-    <PlayerPart backUrl={backUrl} onMetaChange={metaChange}>
+    <PlayerPart backUrl={backUrl}>
       {status === playerStatus.IDLE ? (
         <MetaPart onGetMeta={setPlayerMeta} />
       ) : null}
