@@ -1,3 +1,4 @@
+import { forceTimeout } from "@movie-web/providers";
 import classNames from "classnames";
 import { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
@@ -40,17 +41,34 @@ export function ScrapeItem(props: ScrapeItemProps) {
   const text = statusTextMap[props.status];
   const status = statusMap[props.status];
 
+  const handleSkip = () => {
+    if (props.id) {
+      forceTimeout(props.id);
+    }
+  };
+
   return (
     <div className="grid gap-4 grid-cols-[auto,1fr]" data-source-id={props.id}>
       <StatusCircle type={status} percentage={props.percentage ?? 0} />
       <div>
-        <p
-          className={
-            status === "loading" ? "text-white" : "text-type-secondary"
-          }
-        >
-          {props.name}
-        </p>
+        <div className="flex items-center justify-between">
+          <p
+            className={
+              status === "loading" ? "text-white" : "text-type-secondary"
+            }
+          >
+            {props.name}
+          </p>
+          {props.status === "pending" && (
+            <button
+              type="button"
+              onClick={handleSkip}
+              className="text-[11px] px-2 py-0.5 rounded-full bg-white/10 text-white/70"
+            >
+              Skip
+            </button>
+          )}
+        </div>
         <Transition animation="fade" show={!!text}>
           <p className="text-[15px] mt-1">{text ? t(text) : ""}</p>
         </Transition>
