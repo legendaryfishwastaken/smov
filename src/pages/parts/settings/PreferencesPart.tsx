@@ -1,6 +1,13 @@
 import classNames from "classnames";
+<<<<<<< Updated upstream
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+=======
+import Fuse from "fuse.js";
+import { useMemo, useRef, useState } from "react";
+import { Trans, useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+>>>>>>> Stashed changes
 
 import { getAllProviders, getProviders } from "@/backend/providers/providers";
 import { Button } from "@/components/buttons/Button";
@@ -8,6 +15,7 @@ import { Toggle } from "@/components/buttons/Toggle";
 import { FlagIcon } from "@/components/FlagIcon";
 import { Dropdown } from "@/components/form/Dropdown";
 import { SortableList } from "@/components/form/SortableList";
+import { Icon, Icons } from "@/components/Icon";
 import { Heading1 } from "@/components/utils/Text";
 import { appLanguageOptions } from "@/setup/i18n";
 import { isAutoplayAllowed } from "@/utils/autoplay";
@@ -27,20 +35,41 @@ export function PreferencesPart(props: {
 }) {
   const { t } = useTranslation();
   const sorted = sortLangCodes(appLanguageOptions.map((item) => item.code));
+  const [languageSearch, setLanguageSearch] = useState("");
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const { setLanguage } = props;
 
   const allowAutoplay = isAutoplayAllowed();
 
-  const options = appLanguageOptions
-    .sort((a, b) => sorted.indexOf(a.code) - sorted.indexOf(b.code))
-    .map((opt) => ({
-      id: opt.code,
-      name: `${opt.name}${opt.nativeName ? ` — ${opt.nativeName}` : ""}`,
-      leftIcon: <FlagIcon langCode={opt.code} />,
-    }));
+  const options = useMemo(() => {
+    const baseOptions = appLanguageOptions
+      .sort((a, b) => sorted.indexOf(a.code) - sorted.indexOf(b.code))
+      .map((opt) => ({
+        id: opt.code,
+        name: `${opt.nativeName}${opt.nativeName ? ` — ${opt.name}` : ""}`,
+        leftIcon: <FlagIcon langCode={opt.code} />,
+      }));
 
-  const selected = options.find(
-    (item) => item.id === getLocaleInfo(props.language)?.code,
-  );
+    if (languageSearch.trim().length > 0) {
+      const fuse = new Fuse(baseOptions, {
+        includeScore: true,
+        keys: ["name"],
+      });
+
+      const searchResults = fuse.search(languageSearch).map((res) => res.item);
+      if (searchResults.length > 0) {
+        setLanguage(searchResults[0].id);
+      }
+      return searchResults;
+    }
+
+    return baseOptions;
+  }, [sorted, languageSearch, setLanguage]);
+
+  const selected =
+    options.find((item) => item.id === getLocaleInfo(props.language)?.code) ||
+    options[0];
 
   const allSources = getAllProviders().listSources();
 
@@ -56,6 +85,7 @@ export function PreferencesPart(props: {
   return (
     <div className="space-y-12">
       <Heading1 border>{t("settings.preferences.title")}</Heading1>
+<<<<<<< Updated upstream
       <div>
         <p className="text-white font-bold mb-3">
           {t("settings.preferences.language")}
@@ -69,6 +99,65 @@ export function PreferencesPart(props: {
           setSelectedItem={(opt) => props.setLanguage(opt.id)}
         />
       </div>
+=======
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Column */}
+        <div className="space-y-8">
+          {/* Language Preference */}
+          <div>
+            <p className="text-white font-bold mb-3">
+              {t("settings.preferences.language")}
+            </p>
+            <p className="max-w-[20rem] font-medium">
+              {t("settings.preferences.languageDescription")}
+            </p>
+
+            {/* Combined search and dropdown */}
+            <div className="flex my-4 gap-2 items-center max-w-[25rem]">
+              <div
+                className={classNames(
+                  "relative transition-all duration-200 ease-in-out hidden md:block",
+                  isSearchFocused ? "w-full" : "w-6 mr-8", // needs to stay a fixed size w-6 when colapsed
+                )}
+              >
+                <Icon
+                  className="pointer-events-none absolute top-1/2 left-4 transform -translate-y-1/2 text-search-icon"
+                  icon={Icons.SEARCH}
+                />
+                <input
+                  ref={searchInputRef}
+                  placeholder={
+                    t("settings.preferences.languageSearch") ||
+                    "Search languages"
+                  }
+                  className={classNames(
+                    "py-3 rounded-full tabbable bg-dropdown-background hover:bg-dropdown-hoverBackground px-3 placeholder:text-dropdown-secondary text-white transition-all duration-200 ease-in-out",
+                    isSearchFocused
+                      ? "pl-[calc(0.75rem+30px)]"
+                      : "w-10 cursor-pointer pl-[calc(0.75rem+25px)]", // these padding options are for the start of the text so it doesnt overlap the search icon, but they could comflict?
+                  )}
+                  value={languageSearch}
+                  onChange={(e) => setLanguageSearch(e.target.value)}
+                  onFocus={() => setIsSearchFocused(true)}
+                  onBlur={() => setIsSearchFocused(false)}
+                />
+              </div>
+
+              <div
+                className={classNames(
+                  "transition-all duration-200 ease-in-out",
+                  isSearchFocused ? "w-[90px]" : "w-full", // needs to say fixed at 90px when colapsed
+                )}
+              >
+                <Dropdown
+                  options={options}
+                  selectedItem={selected}
+                  setSelectedItem={(opt) => setLanguage(opt.id)}
+                />
+              </div>
+            </div>
+          </div>
+>>>>>>> Stashed changes
 
       <div>
         <p className="text-white font-bold mb-3">

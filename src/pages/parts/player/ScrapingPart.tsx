@@ -38,6 +38,7 @@ export function ScrapingPart(props: ScrapingProps) {
   const { startScraping, sourceOrder, sources, currentSource } = useScrape();
   const isMounted = useMountedState();
   const { t } = useTranslation();
+  const [showOverlay, setShowOverlay] = useState(true);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const listRef = useRef<HTMLDivElement | null>(null);
@@ -82,6 +83,13 @@ export function ScrapingPart(props: ScrapingProps) {
     })().catch(() => setFailedStartScrape(true));
   }, [startScraping, props, report, isMounted]);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowOverlay(false);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
   let currentProviderIndex = sourceOrder.findIndex(
     (s) => s.id === currentSource || s.children.includes(currentSource ?? ""),
   );
@@ -96,6 +104,14 @@ export function ScrapingPart(props: ScrapingProps) {
       className="h-full w-full relative dir-neutral:origin-top-left flex"
       ref={containerRef}
     >
+      {showOverlay && (
+        <div className="absolute inset-0 flex items-center justify-center bg-background-darker/80 z-50">
+          <p className="text-white text-lg">
+            P-Stream does not host or upload any content, searching the
+            internet.
+          </p>
+        </div>
+      )}
       {!sourceOrder || sourceOrder.length === 0 ? (
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center flex flex-col justify-center z-0">
           <Loading className="mb-8" />
