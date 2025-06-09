@@ -263,6 +263,11 @@ export function LinksDropdown(props: { children: React.ReactNode }) {
           <DropdownLink href="/settings" icon={Icons.SETTINGS}>
             {t("navigation.menu.settings")}
           </DropdownLink>
+           {process.env.NODE_ENV === "development" ? (More actions
+            <DropdownLink href="/dev" icon={Icons.COMPRESS}>
+              {t("navigation.menu.development")}
+            </DropdownLink>
+          ) : null}
           <DropdownLink href="/about" icon={Icons.CIRCLE_QUESTION}>
             {t("navigation.menu.about")}
           </DropdownLink>
