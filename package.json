@@ -1,9 +1,9 @@
 {
   "packageManager": "pnpm@9.14.4",
-  "name": "P-Stream",
+  "name": "Video Thing",
   "version": "5.0.0",
   "private": true,
-  "homepage": "https://github.com/p-stream/p-stream",
+  "homepage": "https://movies.lfdev.site",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
