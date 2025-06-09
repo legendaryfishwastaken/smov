@@ -263,7 +263,7 @@ export function LinksDropdown(props: { children: React.ReactNode }) {
           <DropdownLink href="/settings" icon={Icons.SETTINGS}>
             {t("navigation.menu.settings")}
           </DropdownLink>
-           {process.env.NODE_ENV === "development" ? (More actions
+          {process.env.NODE_ENV === "development" ? (
             <DropdownLink href="/dev" icon={Icons.COMPRESS}>
               {t("navigation.menu.development")}
             </DropdownLink>
@@ -275,7 +275,7 @@ export function LinksDropdown(props: { children: React.ReactNode }) {
             {t("navigation.menu.discover")}
           </DropdownLink>
           <DropdownLink href="/dev" icon={Icons.COMPRESS}>
-            {t("navigation.menu.development")}
+              {t("navigation.menu.development")}
           </DropdownLink>
           <WatchPartyInputLink />
           {deviceName ? (
